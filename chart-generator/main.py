@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
+import scipy.optimize as opt
 
 
 def area_chart(ds, dateFmt):
@@ -79,6 +80,49 @@ def bar_chart(ds, dateFmt):
     fig.savefig('../images/bar_chart.png')
 
 
+def line_chart(ds, dateFmt):
+    # create a subplot
+    fig, ax = plt.subplots()
+
+    # set figure size and dpi
+    fig.set_size_inches(10, 5)
+    fig.set_dpi(300)
+
+    # exponential function
+    def func(x, a, b, c):
+        return a * np.exp(b * x) + c
+
+    # optimized parameters for exponential curve fitting
+    optimizedParameters, _pcov = opt.curve_fit(func, ds['Data'].map(lambda x: (
+        x - datetime.fromisoformat('2020-03-25')).days), ds['Casos acumulados'])
+
+    # draw the curves
+    ax.plot(ds['Data'], ds['Casos acumulados'], color='#f44336',
+            label='Casos totais ({})'.format(ds['Novos casos'].values[-1]))
+    ax.plot(ds['Data'], func(ds['Data'].map(lambda x: (
+        x - datetime.fromisoformat('2020-03-25')).days), *optimizedParameters))
+
+    # write the number of cases at the end of the curve
+    ax.text(ds['Data'].values[-1] + np.timedelta64(12, 'h'),
+            ds['Casos acumulados'].values[-1], str(ds['Casos acumulados'].values[-1]), color='w')
+
+    # set chart style
+    ax.xaxis.set_major_formatter(dateFmt)
+    ax.grid(True)
+    ax.set_facecolor('#101010')
+
+    # set chart title
+    ax.title.set_text('Casos da COVID-19 em Fernandópolis - {}'.format(
+        ds['Data'].iloc[-1].strftime('%d/%m/%Y')))
+
+    # draw legend on the upper left corner
+    ax.legend(loc='upper left')
+
+    # save chart as a png
+    # fig.savefig('../images/line_chart.png')
+    plt.show()
+
+
 def main():
     ds = pd.read_csv('../boletim-epidemiologico.csv')
     ds['Data'] = ds['Data'].map(
@@ -86,6 +130,7 @@ def main():
     dateFmt = mdates.DateFormatter('%d/%m')
     area_chart(ds, dateFmt)
     bar_chart(ds, dateFmt)
+    # line_chart(ds, dateFmt)
 
 
 if __name__ == '__main__':
