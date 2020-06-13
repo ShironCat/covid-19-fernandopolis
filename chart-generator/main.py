@@ -89,18 +89,18 @@ def line_chart(ds, dateFmt):
     fig.set_dpi(300)
 
     # exponential function
-    def func(x, a, b, c):
-        return a * np.exp(b * x) + c
+    def func(x, a, b):
+        return a * np.exp(b * x)
 
     # optimized parameters for exponential curve fitting
-    optimizedParameters, _pcov = opt.curve_fit(func, ds['Data'].map(lambda x: (
-        x - datetime.fromisoformat('2020-03-25')).days), ds['Casos acumulados'])
+    optimizedParameters, _ = opt.curve_fit(func,  ds['Data'].map(lambda x: (
+        x - datetime.fromisoformat('2020-03-25')).days),  ds['Casos acumulados'],  p0=(1, 0.1))
 
     # draw the curves
     ax.plot(ds['Data'], ds['Casos acumulados'], color='#f44336',
-            label='Casos totais ({})'.format(ds['Novos casos'].values[-1]))
-    ax.plot(ds['Data'], func(ds['Data'].map(lambda x: (
-        x - datetime.fromisoformat('2020-03-25')).days), *optimizedParameters))
+            label='Casos totais ({})'.format(ds['Casos acumulados'].values[-1]))
+    ax.plot(ds['Data'], func(ds['Data'].map(lambda x: (x - datetime.fromisoformat('2020-03-25')).days),
+                             *optimizedParameters), color='#f4a235', linestyle='dashed', label='Projeção exponencial dos casos')
 
     # write the number of cases at the end of the curve
     ax.text(ds['Data'].values[-1] + np.timedelta64(12, 'h'),
@@ -119,8 +119,7 @@ def line_chart(ds, dateFmt):
     ax.legend(loc='upper left')
 
     # save chart as a png
-    # fig.savefig('../images/line_chart.png')
-    plt.show()
+    fig.savefig('../images/line_chart.png')
 
 
 def main():
@@ -130,7 +129,7 @@ def main():
     dateFmt = mdates.DateFormatter('%d/%m')
     area_chart(ds, dateFmt)
     bar_chart(ds, dateFmt)
-    # line_chart(ds, dateFmt)
+    line_chart(ds, dateFmt)
 
 
 if __name__ == '__main__':

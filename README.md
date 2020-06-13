@@ -9,6 +9,8 @@ Os dados aqui apresentados são retirados dos boletins epidemiológicos publicad
 
 ![Gráfico em barras dos novos casos da COVID-19](./images/bar_chart.png)
 
+![Gráfico de linha dos casos de COVID-19](./images/line_chart.png)
+
 ## Criação dos gráficos
 
 Para gerar os gráficos com os últimos dados disponíveis no arquivo .csv, execute os comandos abaixo na pasta [chart-generator](./chart-generator).
