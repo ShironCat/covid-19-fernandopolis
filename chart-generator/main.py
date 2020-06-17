@@ -48,7 +48,6 @@ def area_chart(ds, dateFmt):
 
     # set chart style
     ax.xaxis.set_major_formatter(dateFmt)
-    ax.grid(True)
     ax.set_facecolor('#101010')
 
     # set chart title
@@ -93,7 +92,6 @@ def bar_chart(ds, dateFmt):
 
     # set chart style
     ax.xaxis.set_major_formatter(dateFmt)
-    ax.grid(True)
     ax.set_facecolor('#101010')
 
     # set chart title
@@ -174,7 +172,6 @@ def line_chart(ds, dateFmt):
 
     # set chart style
     ax.xaxis.set_major_formatter(dateFmt)
-    ax.grid(True)
     ax.set_facecolor('#101010')
 
     # set chart title
