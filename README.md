@@ -20,7 +20,7 @@ Utilizando pipenv:
 
 ```sh
 pipenv install
-pipenv run python main.py
+pipenv run gen
 ```
 
 Utilizando pip:
