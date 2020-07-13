@@ -70,6 +70,9 @@ def bar_chart(ds, dateFmt):
     fig.set_size_inches(10, 5)
     fig.set_dpi(300)
 
+    # calculate moving average
+    moving_average = ds['Novos casos'].rolling(window=14).mean()
+
     # draw the bars
     ax.bar(
         ds['Data'],
@@ -78,6 +81,13 @@ def bar_chart(ds, dateFmt):
         label='Casos novos de {} ({})'.format(
             ds['Data'].iloc[-1].strftime('%d/%m/%Y'),
             ds['Novos casos'].values[-1]))
+    ax.plot(
+        ds['Data'],
+        moving_average,
+        color='#f4a235',
+        linestyle='dashed',
+        label='Média móvel de casos novos ({})'.format(
+            int(np.trunc(moving_average.iloc[-1]))))
 
     # write the number of cases at the top of each bar
     for date in ds['Data']:
