@@ -125,8 +125,8 @@ def line_chart(ds, dateFmt):
     fig.set_dpi(300)
 
     # exponential function
-    def func(x, a, b, c, d):
-        return a * np.power(x, 3) + b * np.power(x, 2) + c * x + d
+    def func(x, a, b, c, d, e):
+        return a * np.power(x, 4) + b * np.power(x, 3) + c * np.power(x, 2) + d * x + e
 
     # optimized parameters for exponential curve fitting
     optimizedParameters, _ = opt.curve_fit(
