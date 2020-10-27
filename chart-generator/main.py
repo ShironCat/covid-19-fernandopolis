@@ -125,8 +125,8 @@ def line_chart(ds, dateFmt):
     fig.set_dpi(300)
 
     # polynomial function
-    def func(x, a, b, c, d, e, f, g, h):
-        params = [a, b, c, d, e, f, g, h]
+    def func(x, a, b, c, d, e, f, g):
+        params = [a, b, c, d, e, f, g]
         n = len(params)
         total = 0
         for i in range(0, n):
