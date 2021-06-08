@@ -1,3 +1,7 @@
+# ⚠️ Mensagem de Arquivamento ⚠️
+
+Com a introdução da ferramenta de geração automatizada de gráficos por cidade no [@CoronavirusBRBot](https://github.com/stackomate/coronavirus-bot) esse repositório se tornou redundante. Se quiser acompanhar a situação da Covid-19 na sua cidade, recomendo seguir o bot supracitado.
+
 # covid-19-fernandopolis
 
 Repositório público para a divulgação dos casos da COVID-19 de Fernandópolis / SP.
